@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
+public class Player_Death : MonoBehaviour
+{
+    public bool gameover;
+    public GameObject player;
+    public int lowpoint; //the bottom of the screen
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        gameover = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (player.transform.position.y < lowpoint)
+        {
+            gameover = true;
+        }
+        if (gameover == true)
+        {
+            Death();
+        }
+    }
+    void Death()
+    {
+        SceneManager.LoadScene("SuperGPlatformer");
+    }
+}
