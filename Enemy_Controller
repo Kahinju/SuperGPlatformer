@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy_Controller : MonoBehaviour
+{
+    public int enemy_speed;
+    public int enemy_direction;
+    public float distance;
+
+    void Update()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(enemy_direction, 0));
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(enemy_direction, 0) * enemy_speed;
+
+        if (hit.distance < distance)
+        {
+            Flip();
+        }
+    }
+    void Flip()
+    {
+        if (enemy_direction > 0)
+        {
+            enemy_direction = -1;
+        }
+        else
+        {
+            enemy_direction = 1;
+        }
+
+
+    }
+
+}
