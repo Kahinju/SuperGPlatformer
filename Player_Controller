@@ -1,0 +1,64 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Player_Controller : MonoBehaviour
+{
+    public int move_speed;
+    public int jump_power;
+    private float movement;
+    public bool is_grounded;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        PlayerMove();
+    }
+    
+    void PlayerMove()
+    { 
+        movement = Input.GetAxis("Horizontal");
+        if (Input.GetButtonDown("Jump") && is_grounded == true)
+        {
+            Jump();
+        }
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(movement * move_speed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+    }
+    void Jump()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * (jump_power + movement));
+        is_grounded = false;
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Enemy")
+        {
+            Death();
+        }
+        if (col.gameObject.tag == "Ground")
+        {
+            is_grounded = true;
+        }
+        if (col.gameObject.tag == "Win")
+        {
+            Win();
+        }
+    }
+    void Death()
+    {
+        SceneManager.LoadScene("SuperGPlatformer");
+    }
+    void Win()
+    {
+        SceneManager.LoadScene("WinCondition");
+    }
+
+}
