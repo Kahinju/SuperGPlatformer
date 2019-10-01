@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy_Controller_2 : MonoBehaviour
+{
+    private bool grounded;
+    public int jump_strength;
+    
+    void Start()
+    {
+        
+    }
+
+
+    void Update()
+    {
+        if (grounded == true)
+        {
+            Jump();
+        }
+    }
+    void Jump()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * jump_strength);
+        grounded = false;
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
+    }
+}
